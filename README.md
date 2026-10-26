@@ -29,6 +29,9 @@ npx @belov.ai/source-to-llm -s "===="
 - `-i, --ignore <patterns...>` - Patterns to ignore (default: `["**/node_modules/**", "**/dist/**", "**/build/**"]`)
 - `-s, --separator <string>` - Separator between files (default: 80 dashes)
 - `-d, --dir <path>` - Target directory path (default: current working directory)
+- `-V, --version` - Print the version
+
+Files are printed in sorted path order. Binary files are skipped with a note on stderr.
 
 ## Example Output
 
@@ -77,7 +80,7 @@ export const formatDate = (date: Date): string => {
 
 ## Requirements
 
-- Node.js >= 18.0.0
+- Node.js >= 20.0.0
 
 ## License
 

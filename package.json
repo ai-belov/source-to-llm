@@ -1,6 +1,6 @@
 {
   "name": "@belov.ai/source-to-llm",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Extract source code from files and format it for LLM context/prompt",
   "type": "module",
   "main": "source-to-llm.js",
@@ -23,8 +23,8 @@
   "author": "belov.ai",
   "license": "MIT",
   "dependencies": {
-    "commander": "^13.0.0",
-    "glob": "^11.0.0"
+    "commander": "^14.0.3",
+    "glob": "^13.0.6"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/ai-belov/source-to-llm#readme",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "files": [
     "source-to-llm.js",

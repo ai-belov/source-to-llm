@@ -4,12 +4,16 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { glob } from 'glob';
 import { Command } from 'commander';
+import { createRequire } from 'module';
+
+const { version } = createRequire(import.meta.url)('./package.json');
 
 const program = new Command();
 
 program
     .name('source-to-llm')
     .description('Extract source code from files and format it for LLM context')
+    .version(version)
     .option('-p, --pattern <patterns...>', 'file patterns to match (e.g. "**/*.ts")', ['**/*.ts', '**/*.js', '**/*.tsx', '**/*.jsx'])
     .option('-i, --ignore <patterns...>', 'patterns to ignore', ['**/node_modules/**', '**/dist/**', '**/build/**'])
     .option('-s, --separator <string>', 'separator between files', '-'.repeat(80))
@@ -25,13 +29,20 @@ async function findFiles(patterns, ignorePatterns, baseDir) {
         cwd: baseDir,
         absolute: true
     });
-    return files;
+    // glob returns files in filesystem order, sort for stable output
+    return files.sort();
 }
 
 async function processFile(filePath, targetDir) {
     try {
-        const content = await fs.readFile(filePath, 'utf8');
+        const buffer = await fs.readFile(filePath);
         const relativePath = path.relative(targetDir, filePath);
+
+        if (buffer.includes(0)) {
+            console.error(`Skipping binary file: ${relativePath}`);
+            return;
+        }
+        const content = buffer.toString('utf8');
 
         console.log(`File: ${relativePath}`);
         console.log(options.separator);
